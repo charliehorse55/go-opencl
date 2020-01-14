@@ -413,6 +413,13 @@ func WaitForEvents(events []*Event) error {
 	return toError(C.clWaitForEvents(C.cl_uint(len(events)), eventListPtr(events)))
 }
 
+
+func (e *Event)GetExecutionStatus() (CommmandExecStatus, error)  {
+	var x C.cl_int
+	err := toError(C.clGetEventInfo(e.clEvent, C.CL_EVENT_COMMAND_EXECUTION_STATUS, C.size_t(unsafe.Sizeof(x)), unsafe.Pointer(&x), nil))
+	return CommmandExecStatus(x), err
+}
+
 func newEvent(clEvent C.cl_event) *Event {
 	ev := &Event{clEvent: clEvent}
 	runtime.SetFinalizer(ev, releaseEvent)
