@@ -356,13 +356,13 @@ const (
 	ProfilingInfoCommandEnd ProfilingInfo = C.CL_PROFILING_COMMAND_END
 )
 
-type CommmandExecStatus int
+type CommandExecStatus int
 
 const (
-	CommmandExecStatusComplete  CommmandExecStatus = C.CL_COMPLETE
-	CommmandExecStatusRunning   CommmandExecStatus = C.CL_RUNNING
-	CommmandExecStatusSubmitted CommmandExecStatus = C.CL_SUBMITTED
-	CommmandExecStatusQueued    CommmandExecStatus = C.CL_QUEUED
+	CommandExecStatusComplete  CommandExecStatus = C.CL_COMPLETE
+	CommandExecStatusRunning   CommandExecStatus = C.CL_RUNNING
+	CommandExecStatusSubmitted CommandExecStatus = C.CL_SUBMITTED
+	CommandExecStatusQueued    CommandExecStatus = C.CL_QUEUED
 )
 
 type Event struct {
@@ -414,10 +414,10 @@ func WaitForEvents(events []*Event) error {
 }
 
 
-func (e *Event)GetExecutionStatus() (CommmandExecStatus, error)  {
+func (e *Event)GetExecutionStatus() (CommandExecStatus, error)  {
 	var x C.cl_int
 	err := toError(C.clGetEventInfo(e.clEvent, C.CL_EVENT_COMMAND_EXECUTION_STATUS, C.size_t(unsafe.Sizeof(x)), unsafe.Pointer(&x), nil))
-	return CommmandExecStatus(x), err
+	return CommandExecStatus(x), err
 }
 
 func newEvent(clEvent C.cl_event) *Event {
