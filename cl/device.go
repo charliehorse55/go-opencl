@@ -8,7 +8,7 @@ import (
 	"unsafe"
 )
 
-const maxDeviceCount = 64
+const maxDeviceCount = 512
 
 type DeviceType uint
 
